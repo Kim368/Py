@@ -20,7 +20,6 @@ def dump_f(fun):
             if c != ' ':
                 break
             lines[0] = lines[0][1:]
-
     # (['def foo(c):\n', '    a = 1234\n', "    b = 'asdf'\n", '    return b + c\n'], 5)
     # list return
     return lines
