@@ -16,8 +16,12 @@ def foo():
     return None
 
 print(my_class.my_class2)
-print(str(my_class.__name__))
-asd = eval('''my_class.my_class2''')
+print('name = '+str(my_class.__name__))
+print("just class ")
+print('name = '+str(foo.__qualname__))
+print("just func ")
+print(my_class.pr)
+asd = eval(str(my_class.pr.__qualname__))
 print(asd)
 print(eval('''foo'''))
 
@@ -27,57 +31,102 @@ print(eval('''foo'''))
 
 # TODO ADD global local
 # TODO Git
+def make_lines_from_collection(collection):
+    dump_obj = make_corrent_dumps(
+                make_correct_and_str_dict(collection),
+                collection)
+    return dump_obj
 
-def to_str_objInObj(obj):
-
+def make_correct_and_str_dict(obj):
+    # correct_values = []
+    # str_values = []
+    correct_and_str = {'correct_values': [], 'str_values': []}
     if type(obj).__name__ == 'dict':
         keys = obj.keys()
         values = obj.values()
         for i in keys:
-            print(type(i).__name__)
+            print(str(i) + '   ' + type(i).__name__)
 
             if type(i).__name__ == 'type':
                 print('+++++++++++++++++++++TYPE+++++++++++')
-            if type(i).__name__ == 'function':
-                print('+++++++++++++++++++++function+++++++++++')
 
+                correct_and_str['correct_values'].append(i.__qualname__)
+                correct_and_str['str_values'].append(str(i))
+
+            elif type(i).__name__ == 'function':
+                print('+++++++++++++++++++++function+++++++++++')
+                correct_and_str['correct_values'].append(i.__qualname__)
+                correct_and_str['str_values'].append(str(i))
             if (type(i).__name__ == 'tuple'
             or type(i).__name__ == 'list'
             or type(i).__name__ == 'dict'
             or type(i).__name__ == 'set'):
                 print('__________1111_________-to_str_objInObj(__________')
-                to_str_objInObj(i)
+                tmp = make_correct_and_str_dict(i)
+                correct_and_str['correct_values'] += tmp['correct_values']
+                correct_and_str['str_values'] += tmp['str_values']
+
+
         for i in values:
             print(type(i).__name__)
 
             if type(i).__name__ == 'type':
                 print('+++++++++++++++++++++TYPE+++++++++++')
+                correct_and_str['correct_values'].append(i.__qualname__)
+                correct_and_str['str_values'].append(str(i))
+
             if type(i).__name__ == 'function':
                 print('+++++++++++++++++++++function+++++++++++')
+                correct_and_str['correct_values'].append(i.__qualname__)
+                correct_and_str['str_values'].append(str(i))
 
             if (type(i).__name__ == 'tuple'
             or type(i).__name__ == 'list'
             or type(i).__name__ == 'dict'
             or type(i).__name__ == 'set'):
                 print('___________________-222to_str_objInObj(__________')
-                to_str_objInObj(i)
+                tmp = make_correct_and_str_dict(i)
+                correct_and_str['correct_values'] += tmp['correct_values']
+                correct_and_str['str_values'] += tmp['str_values']
+
+
+
     else:
         for i in obj:
             print( type(i).__name__)
 
             if type(i).__name__ == 'type':
                 print('+++++++++++++++++++++TYPE+++++++++++')
+                correct_and_str['correct_values'].append(i.__qualname__)
+                correct_and_str['str_values'].append(str(i))
+
             if type(i).__name__ == 'function':
                 print('+++++++++++++++++++++function+++++++++++')
-
+                correct_and_str['correct_values'].append(i.__qualname__)
+                correct_and_str['str_values'].append(str(i))
             if (type(i).__name__ == 'tuple'
             or type(i).__name__ == 'list'
             or type(i).__name__ == 'dict'
             or type(i).__name__ == 'set'):
                 print('___________________-to_str_objInObj(__________')
-                to_str_objInObj(i)
+                tmp = make_correct_and_str_dict(i)
+                correct_and_str['correct_values'] += tmp['correct_values']
+                correct_and_str['str_values'] += tmp['str_values']
+    return correct_and_str
 
-    return obj
+def make_corrent_dumps(corrent_and_str, obj):
+    str_values = corrent_and_str['str_values']
+    correct_values = corrent_and_str['correct_values']
+    lines = str(obj)
+
+    print('str_ vall' + str(str_values))
+    for i in range(len(str_values)):
+        splt = lines.split(str_values[i], 1)
+        if len(splt) > 1:
+            lines = splt[0] + correct_values[i] + splt[1]
+            print(type(lines))
+    print(lines+'\n\n\n')
+    return {'type': type(obj).__name__, 'lines': lines}
 
 def dumps_listt(value):
     dump_obj = {'type': type(value).__name__, 'lines': str(value)}
@@ -86,7 +135,7 @@ def dumps_listt(value):
     or dump_obj['type'] == 'list'
     or dump_obj['type'] == 'dict'
     or dump_obj['type'] == 'set'):
-        to_str_objInObj(value)
+        dump_obj = make_lines_from_collection(value)
 
     return dump_obj
 
@@ -95,6 +144,7 @@ def loads_listt(dump_obj):
     #         or dump_obj['type'] == 'list' \
     #         or dump_obj['type'] == 'dict':
     #     obj
+    print(dump_obj)
     if dump_obj['type'] == 'str':
         return str(eval(dump_obj['lines']))
     else:
@@ -137,13 +187,13 @@ print(type(fff).__name__ + '  ' + str(fff))
 fff = loads_listt(dumps_listt(s))
 print(type(fff).__name__ + '  ' + str(fff))
 
-fff = dumps_listt(g)
+fff = loads_listt(dumps_listt(g))
 print(type(fff).__name__ + '  ' + str(fff))
 
-fff = dumps_listt(f)
+fff = loads_listt(dumps_listt(f))
 print(type(fff).__name__ + '  ' + str(fff))
 
-fff = dumps_listt(d)
+fff = loads_listt(dumps_listt(d))
 print(type(fff).__name__ + '  ' + str(fff))
 
 
