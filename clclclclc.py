@@ -3,6 +3,8 @@ class my_class():
     def __init__(self, s):
         self.c = s
         self.s = s+s
+
+
     a = 1
     b = "mfksdkfs"
     d = 'hhh'
@@ -14,7 +16,7 @@ class my_class():
         self.a = self.s # a stanovitsa attributom
         print('a = ', self.a, ' b = ', self.b,  ' c = ', self.c)
 
-lllll =''
+lllll = ''
 
 import inspect
 def dumps_cls(obj):
