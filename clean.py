@@ -1,13 +1,61 @@
 import inspect
 
 
+def dump(obj, path, *args):
+
+    dumps_obj = dumps(obj)
+    if (len(args) == 1):
+        import factory
+        dumps_obj = factory.create_serializer(args[0], dumps_obj)
+        if path.find('.') != -1:
+            path = str(path.split('.')[0]) + '.' + args[0]
+        print('path ' + path)
+    # if args[0] == 'pickle':
+    #     f = open(path, 'w')
+    #     f.
+    # else:
+    f = open(path, 'w')
+    f.writelines(str(dumps_obj))
+    f.close()
+    print("Dumping was successful")
+
+
+def load(path):
+
+    if path.find('.') != -1:
+        find_in_types = 'picklejsonyamltoml'
+        ftype = str(path.split('.')[-1])
+        if find_in_types.find(ftype) != -1:
+            # if ftype == 'pickle':
+            #     f = open(path, 'rb')
+            #     line = f.read()
+            #     f.close()
+            # else:
+            f = open(path, 'r')
+            line = f.read()
+            f.close()
+            import factory
+            line = factory.create_deserializer(ftype, line)
+            print(line)
+
+
+    dump_obj = eval(line)
+    print(type(dump_obj).__name__ + ' ' + str(line))
+    return loads(dump_obj)
+
+
+
+def convert(obj):
+    pass
+
+
 def loads(dumps_obj):
     if dumps_obj['type'] == 'type':
         obj = __loads_class(dumps_obj['lines'])
     elif dumps_obj['type'] == 'function':
         obj = __loads_func(dumps_obj['lines'])
     else:
-        obj = __loads_other(dumps_obj['lines'])
+        obj = __loads_other(dumps_obj)
     return obj
 
 
@@ -189,3 +237,6 @@ def __make_corrent_dumps(corrent_and_str, obj):
             lines = splt[0] + correct_values[i] + splt[1]
     return {'type': type(obj).__name__, 'lines': lines}
 
+dump({'asds': 1, 3: {'a': 4, 333: dump}}, '/home/jke/txt.txt', 'pickle')
+a = load('/home/jke/txt.pickle')
+# pickle.dump({'asds': 1, 3: {'a': 4, 333: 23123}},open('/home/jke/pickle', 'wb'))
