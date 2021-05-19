@@ -34,11 +34,11 @@ class ParserCreatorJson(Creator):
         return ParserJson(self.obj)
 
 class ParserCreatorDeJson(Creator):
-    def __init__(self, obj):
+    def __init__(self, dump_obj):
         self.dump_obj = dump_obj
 
     def factory_method(self):
-        return ParserPickle(self.dump_obj)
+        return ParserDeJson(self.dump_obj)
 
 class ParserCreatorYaml(Creator):
     def __init__(self, obj):
@@ -47,11 +47,11 @@ class ParserCreatorYaml(Creator):
         return ParserYaml(self.obj)
 
 class ParserCreatorDeYaml(Creator):
-    def __init__(self, obj):
+    def __init__(self, dump_obj):
         self.dump_obj = dump_obj
 
     def factory_method(self):
-        return ParserPickle(self.dump_obj)
+        return ParserDeYaml(self.dump_obj)
 
 class ParserCreatorToml(Creator):
     def __init__(self, obj):
@@ -60,11 +60,11 @@ class ParserCreatorToml(Creator):
         return ParserToml(self.obj)
 
 class ParserCreatorDeToml(Creator):
-    def __init__(self, obj):
+    def __init__(self, dump_obj):
         self.dump_obj = dump_obj
 
     def factory_method(self):
-        return ParserPickle(self.dump_obj)
+        return ParserDeToml(self.dump_obj)
 
 class Parser(ABC):
 
@@ -79,7 +79,9 @@ class ParserPickle(Parser):
         self.obj = obj
 
     def pick(self):
-        return pickle.dumps(self.obj)
+        import codecs
+        # return pickle.dumps(self.obj)
+        return codecs.encode(pickle.dumps(self.obj), "base64").decode()
 
     def operation(self):
         pick = self.pick()
@@ -91,8 +93,9 @@ class ParserDePickle(Parser):
 
     def pick(self):
         print('asdasdas' + self.dump_obj)
-        return pickle.loads(self.dump_obj)
-    # TODO str to byte
+        import codecs
+        return pickle.loads(codecs.decode(self.dump_obj.encode(), "base64"))
+        #return pickle.loads(self.dump_obj, encoding="ASCII")
 
     def operation(self):
         pick = self.pick()
@@ -116,6 +119,31 @@ class ParserJson(Parser):
         j = self.json()
         return j
 
+class ParserDeJson(Parser):
+    def __init__ (self, dump_obj):
+        self.dump_obj = dump_obj
+
+    def json(self):
+        dump_obj_type = None
+        dump_obj_lines = None
+        lines = self.dump_obj.split('\n')
+        print(lines)
+        for line in lines:
+            if line.find("'type': ") != -1:
+                dump_obj_type = line.split("'type': ")[-1][1:-1]
+            if line.find("'lines': ") != -1:
+                dump_obj_lines = line.split("'lines': ")[-1][1:-1]
+
+        if (dump_obj_type is not None) and (dump_obj_lines is not None):
+            dump_obj = {'type': dump_obj_type, 'lines': dump_obj_lines}
+            return dump_obj
+        pass
+        # return pickle.loads(self.dump_obj, encoding="ASCII")
+
+    def operation (self):
+        j = self.json()
+        return j
+
 class ParserYaml(Parser):
     def __init__(self, obj):
         self.obj = obj
@@ -129,6 +157,50 @@ class ParserYaml(Parser):
         return ystr
     def operation(self):
         y = self.yaml()
+        return y
+
+class ParserDeYaml(Parser):
+    def __init__ (self, dump_obj):
+        self.dump_obj = dump_obj
+
+    def yaml(self):
+        dump_obj_type = None
+        dump_obj_lines = None
+        lines = self.dump_obj.split('\n')
+        for line in lines:
+            if line.find('type: ') != -1:
+                dump_obj_type = line.split('type: ')[-1]
+            if line.find('lines: ') != -1:
+                dump_obj_lines = line.split('lines: ')[-1]
+        if (dump_obj_type is not None) and (dump_obj_lines is not None):
+            dump_obj = {'type': dump_obj_type, 'lines': dump_obj_lines}
+            return dump_obj
+        pass
+
+    def operation (self):
+        y = self.yaml()
+        return y
+
+class ParserDeToml(Parser):
+    def __init__ (self, dump_obj):
+        self.dump_obj = dump_obj
+
+    def toml(self):
+        dump_obj_type = None
+        dump_obj_lines = None
+        lines = self.dump_obj.split('\n')
+        for line in lines:
+            if line.find('type = ') != -1:
+                dump_obj_type = line.split('type = ')[-1]
+            if line.find('lines = ') != -1:
+                dump_obj_lines = line.split('lines = ')[-1]
+        if (dump_obj_type is not None) and (dump_obj_lines is not None):
+            dump_obj = {'type': dump_obj_type, 'lines': dump_obj_lines}
+            return dump_obj
+        pass
+
+    def operation (self):
+        y = self.toml()
         return y
 
 class ParserToml(Parser):

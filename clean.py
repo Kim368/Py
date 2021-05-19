@@ -9,15 +9,12 @@ def dump(obj, path, *args):
         dumps_obj = factory.create_serializer(args[0], dumps_obj)
         if path.find('.') != -1:
             path = str(path.split('.')[0]) + '.' + args[0]
-        print('path ' + path)
-    # if args[0] == 'pickle':
-    #     f = open(path, 'w')
-    #     f.
-    # else:
+        # print('path ' + path)
+
     f = open(path, 'w')
     f.writelines(str(dumps_obj))
     f.close()
-    print("Dumping was successful")
+    print(f"Dumping was successful: {path}")
 
 
 def load(path):
@@ -26,22 +23,12 @@ def load(path):
         find_in_types = 'picklejsonyamltoml'
         ftype = str(path.split('.')[-1])
         if find_in_types.find(ftype) != -1:
-            # if ftype == 'pickle':
-            #     f = open(path, 'rb')
-            #     line = f.read()
-            #     f.close()
-            # else:
             f = open(path, 'r')
             line = f.read()
             f.close()
             import factory
-            line = factory.create_deserializer(ftype, line)
-            print(line)
-
-
-    dump_obj = eval(line)
-    print(type(dump_obj).__name__ + ' ' + str(line))
-    return loads(dump_obj)
+            dump_obj = factory.create_deserializer(ftype, line)
+            return loads(dump_obj)
 
 
 
@@ -97,7 +84,7 @@ def __loads_func(lines):
 
 
 def __loads_other(dump_obj):
-    print(dump_obj)
+    # print(dump_obj)
     if dump_obj['type'] == 'str':
         return str(eval(dump_obj['lines']))
     else:
@@ -117,7 +104,7 @@ def dumps(obj):
 def __dumps_class(obj):
     # attributes = obj.__dict__
     lines = inspect.getsourcelines(obj)  # inspect.getsourcelines(obj.__class__)
-    print('lines: ' + str(lines))
+    # print('lines: ' + str(lines))
     if lines[0][0] == ' ':
         for c in lines[0]:
             if c != ' ':
@@ -178,14 +165,14 @@ def __make_correct_and_str_dict(obj):
                 or type(i).__name__ == 'list'
                 or type(i).__name__ == 'dict'
                     or type(i).__name__ == 'set'):
-                print('__________1111_________-to_str_objInObj(__________')
+                # print('__________1111_________-to_str_objInObj(__________')
                 tmp = __make_correct_and_str_dict(i)
                 correct_and_str['correct_values'] += tmp['correct_values']
                 correct_and_str['str_values'] += tmp['str_values']
 
 
         for i in values:
-            print(type(i).__name__)
+            # print(type(i).__name__)
 
             if type(i).__name__ == 'type':
                 correct_and_str['correct_values'].append(i.__qualname__)
@@ -207,7 +194,7 @@ def __make_correct_and_str_dict(obj):
 
     else:
         for i in obj:
-            print( type(i).__name__)
+            # print( type(i).__name__)
 
             if type(i).__name__ == 'type':
                 correct_and_str['correct_values'].append(i.__qualname__)
@@ -237,6 +224,11 @@ def __make_corrent_dumps(corrent_and_str, obj):
             lines = splt[0] + correct_values[i] + splt[1]
     return {'type': type(obj).__name__, 'lines': lines}
 
-dump({'asds': 1, 3: {'a': 4, 333: dump}}, '/home/jke/txt.txt', 'pickle')
-a = load('/home/jke/txt.pickle')
+# dump({'asds': 1, 3: {'a': 4, 333: dump}}, '/home/jke/txt.txt', 'pickle')
+# dump({'asds': 1, 3: {'a': 4, 333: dump}}, '/home/jke/txt.txt', 'json')
+# a = load('/home/jke/txt.pickle')
+# a = load('/home/jke/txt.json')
 # pickle.dump({'asds': 1, 3: {'a': 4, 333: 23123}},open('/home/jke/pickle', 'wb'))
+dump({'asds': 1, 3: {'a': 4, 333: dump}}, '/home/jke/txt.txt', 'toml')
+a = load('/home/jke/txt.toml')
+print(a)
