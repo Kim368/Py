@@ -223,7 +223,7 @@ def client_code(creator: Creator):
 
     # print(f"Client work with {creator.same_operation()}")
     return creator.same_operation()
-# TODO add return
+
 
 def create_serializer(type, obj):
     d = {'pickle': ParserCreatorPickle, 'json': ParserCreatorJson, 'yaml': ParserCreatorYaml, 'toml': ParserCreatorToml}
