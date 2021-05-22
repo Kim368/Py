@@ -212,7 +212,7 @@ class ParserDeYaml(Parser):
         if (dump_obj_type is not None) and (dump_obj_lines is not None):
             dump_obj = {'type': dump_obj_type, 'lines': dump_obj_lines}
             return dump_obj
-        pass
+
 
     def operation (self):
         y = self.yaml()
@@ -236,7 +236,7 @@ class ParserDeToml(Parser):
         if (dump_obj_type is not None) and (dump_obj_lines is not None):
             dump_obj = {'type': dump_obj_type, 'lines': dump_obj_lines}
             return dump_obj
-        pass
+
 
     def operation (self):
         y = self.toml()
@@ -280,9 +280,9 @@ def create_deserializer(ftype, dump_obj):
 
 
 ##
-if __name__ == "__main__":
-    create_serializer('pickle', '1231231231')
-    client_code(ParserCreatorPickle('1234'))
-    client_code(ParserCreatorYaml({'type': 'dict', 'lines': "{'asds': 1, 3: {'a': 4, 333: dump}}"}))
-    client_code(ParserCreatorJson({'type': 'dict', 'lines': "{'asds': 1, 3: {'a': 4, 333: dump}}"}))
-    client_code(ParserCreatorToml({'type': 'dict', 'lines': "{'asds': 1, 3: {'a': 4, 333: dump}}"}))
+# if __name__ == "__main__":
+#     create_serializer('pickle', '1231231231')
+#     client_code(ParserCreatorPickle('1234'))
+#     client_code(ParserCreatorYaml({'type': 'dict', 'lines': "{'asds': 1, 3: {'a': 4, 333: dump}}"}))
+#     client_code(ParserCreatorJson({'type': 'dict', 'lines': "{'asds': 1, 3: {'a': 4, 333: dump}}"}))
+#     client_code(ParserCreatorToml({'type': 'dict', 'lines': "{'asds': 1, 3: {'a': 4, 333: dump}}"}))

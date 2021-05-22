@@ -36,8 +36,8 @@ class Collections():
     list_bool = []
     set_bool = ()
     list_list = []
-    dictionary = {my_class: 123, 'asdas': 234, 6:1}
-    tupl = (1, 2, 'asdd', my_class)
+    dictionary = {my_class: 123, 'asdas': 234, 6:1, my_class.pr: 'funk', 'abc': ['a', 'b', 'c']}
+    tupl = (1, 2, 'asdd', my_class, my_class.aaa)
 
     def __init__(self):
         self.list_int = self.get_list_int()

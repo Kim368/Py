@@ -117,7 +117,7 @@ def __loads_func(lines, globl):
 def __loads_other(dump_obj, globl):
     # print(dump_obj)
     if dump_obj['type'] == 'str':
-        return str(eval(dump_obj['lines']))
+        return dump_obj['lines']
     else:
         return eval(dump_obj['lines'], globl)
 
@@ -262,13 +262,13 @@ def __make_corrent_dumps(corrent_and_str, obj):
 
 
 
-if __name__ == "__main__":
-    # dump({'asds': 1, 3: {'a': 4, 333: dump}}, '/home/jke/txt.txt', 'pickle')
-    # dump({'asds': 1, 3: {'a': 4, 333: dump}}, '/home/jke/txt.txt', 'json')
-    # a = load('/home/jke/txt.pickle')
-    # a = load('/home/jke/txt.json')
-    # pickle.dump({'asds': 1, 3: {'a': 4, 333: 23123}},open('/home/jke/pickle', 'wb'))
-    a = dumps({'asds': 1, 3: {'a': 12345689876543, 333: dump}})
-    a = loads(a, {})
-    convert('/home/jke/txt.toml', 'json')
-    # print(a)
+# if __name__ == "__main__":
+#     # dump({'asds': 1, 3: {'a': 4, 333: dump}}, '/home/jke/txt.txt', 'pickle')
+#     # dump({'asds': 1, 3: {'a': 4, 333: dump}}, '/home/jke/txt.txt', 'json')
+#     # a = load('/home/jke/txt.pickle')
+#     # a = load('/home/jke/txt.json')
+#     # pickle.dump({'asds': 1, 3: {'a': 4, 333: 23123}},open('/home/jke/pickle', 'wb'))
+#     a = dumps({'asds': 1, 3: {'a': 12345689876543, 333: dump}})
+#     a = loads(a, {})
+#     convert('/home/jke/txt.toml', 'json')
+#     # print(a)
