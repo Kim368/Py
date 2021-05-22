@@ -11,6 +11,13 @@ def foo2(c,d):
     b = 'asdf'
     return b + c + str(d)
 
+import clean
+
+# print(clean.dumps(foo))
+
+clean.convert('/home/jke/txt.toml', 'json')
+
+
 import inspect
 
 def dump_f(fun):

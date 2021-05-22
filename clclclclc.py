@@ -16,6 +16,12 @@ class my_class():
         self.a = self.s # a stanovitsa attributom
         print('a = ', self.a, ' b = ', self.b,  ' c = ', self.c)
 
+
+
+
+
+
+
 lllll = ''
 
 import inspect

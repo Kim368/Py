@@ -36,7 +36,7 @@ class Collections():
     list_bool = []
     set_bool = ()
     list_list = []
-    dictionary = {}
+    dictionary = {my_class: 123, 'asdas': 234, 6:1}
     tupl = (1, 2, 'asdd', my_class)
 
     def __init__(self):
@@ -46,7 +46,7 @@ class Collections():
         self.list_bool = self.get_list_bool()
         self.set_bool = self.get_set()
         self.list_list = self.get_list_list()
-        self.dictionary = self.get_dict()
+        #self.dictionary = self.get_dict()
 
 
     def get_list_int(self):
@@ -103,3 +103,17 @@ class Collections():
         d[my_class] = my_class.pr
         d[my_class.pr] = my_class.my_class2
         return d
+
+# import clean
+# Collections()
+# clean.dump(Collections, '/home/jke/txt.json', 'pickle')
+# clean.dump(Collections, '/home/jke/txt.json', 'json')
+# clean.dump(Collections, '/home/jke/txt.json', 'yaml')
+# clean.dump(Collections, '/home/jke/txt.json', 'toml')
+#
+# # a = clean.load('/home/jke/txt.json', {'my_class': my_class})
+# clean.convert('/home/jke/txt.pickle', 'json')
+# clean.convert('/home/jke/txt.pickle', 'json')
+# a = clean.load('/home/jke/txt.json', {'my_class': my_class})
+# clean.load('/home/jke/txt.yaml', {'my_class': my_class})
+# print(a)
