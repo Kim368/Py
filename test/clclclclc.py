@@ -76,7 +76,7 @@ c = loads_cl(dumps_cls(my_class))
 print(c)
 print(c('a').aaa())
 
-from dfdf import *
+from test.dfdf import *
 
 d = loads(dump_f(my_class.pr))
 print(d)

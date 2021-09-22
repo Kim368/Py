@@ -262,13 +262,3 @@ def __make_corrent_dumps(corrent_and_str, obj):
 
 
 
-# if __name__ == "__main__":
-#     # dump({'asds': 1, 3: {'a': 4, 333: dump}}, '/home/jke/txt.txt', 'pickle')
-#     # dump({'asds': 1, 3: {'a': 4, 333: dump}}, '/home/jke/txt.txt', 'json')
-#     # a = load('/home/jke/txt.pickle')
-#     # a = load('/home/jke/txt.json')
-#     # pickle.dump({'asds': 1, 3: {'a': 4, 333: 23123}},open('/home/jke/pickle', 'wb'))
-#     a = dumps({'asds': 1, 3: {'a': 12345689876543, 333: dump}})
-#     a = loads(a, {})
-#     convert('/home/jke/txt.toml', 'json')
-#     # print(a)

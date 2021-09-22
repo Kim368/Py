@@ -3,10 +3,10 @@ from abc import ABC, abstractmethod
 
 class Creator(ABC):
     @abstractmethod
-    def factory_method (self):
+    def factory_method(self):
         pass
 
-    def same_operation (self):
+    def same_operation(self):
         parser = self.factory_method()
 
         result = parser.operation()
@@ -286,3 +286,4 @@ def create_deserializer(ftype, dump_obj):
 #     client_code(ParserCreatorYaml({'type': 'dict', 'lines': "{'asds': 1, 3: {'a': 4, 333: dump}}"}))
 #     client_code(ParserCreatorJson({'type': 'dict', 'lines': "{'asds': 1, 3: {'a': 4, 333: dump}}"}))
 #     client_code(ParserCreatorToml({'type': 'dict', 'lines': "{'asds': 1, 3: {'a': 4, 333: dump}}"}))
+
