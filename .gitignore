@@ -3,3 +3,4 @@
 /dist
 /ISP.egg-info
 /.pytest_cache
+*.pyc
